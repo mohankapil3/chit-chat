@@ -14,7 +14,7 @@ class ChatRoom extends React.Component {
   render() {
       return (
          <div id="chat-room-dialogue" className="chit-chat__dialogue chat-room">
-             <ChatHeader/>
+             <ChatHeader status={ this.props.status }/>
              <label>Chat name - { this.props.chatName }</label>
          </div>
       );

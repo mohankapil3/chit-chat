@@ -7,6 +7,7 @@ export default function ChatHeader(props) {
           <h2 className="app-header">
               ChitChat
           </h2>
+          <label>Status - { props.status }</label>
           <hr className="app-header__horizontal-rule"/>
         </div>
     );
