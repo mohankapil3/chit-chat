@@ -42,7 +42,7 @@ class ChitChatApp extends React.Component {
     }
 
     handleJoinChat() {
-        let username = document.getElementById("chat-name").value;
+        let username = document.getElementById("textbox-chat-name").value;
         if (username === '') {
             alert('Name is empty');
             return;
@@ -67,19 +67,41 @@ class ChitChatApp extends React.Component {
     onStompClientError(error) {
         console.log('Stomp client connection error');
         console.log(error);
-        // TODO retry?
     }
 
     onStompClientMessageReceived(payload) {
-        console.log('Message received from server');
-        let message = JSON.parse(payload.body);
-        console.log('Message - ' + message);
-        // TODO concatenate to messages array
+        let message = payload.body;
+
+        if (message) {
+            var newMessage;
+            if (message.indexOf('content') !== -1) {
+                // its a chat message
+                newMessage = JSON.parse(message);
+            } else {
+                // its a system message
+                newMessage = {
+                    sender: 'System',
+                    content: message
+                }
+            }
+
+            this.setState(state => ({ messages: state.messages.concat(newMessage) }));
+        }
     }
 
-    handleSendMessage(message) {
-        console.log('Sending message to server');
-        this.state.stompClient.send('/topic/chit-chat', {}, message);
+    handleSendMessage() {
+        let messageContent = document.getElementById("textbox-chat-message").value;
+        if (messageContent === '') {
+            alert('Message is empty');
+            return;
+        }
+
+        let message = {
+            sender: this.state.username,
+            content: messageContent
+        };
+
+        this.state.stompClient.send('/topic/chit-chat', {}, JSON.stringify(message));
     }
 
  }
