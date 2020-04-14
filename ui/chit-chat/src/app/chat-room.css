@@ -1,9 +1,14 @@
 .chat-room {
-    height: 375px;
+    height: 495px;
     width: 300px;
 }
 
 .chat-room > * {
     margin-left: 15px;
     margin-bottom: 10px;
+}
+
+p {
+    word-break: break-all;
+    white-space: normal;
 }

@@ -6,7 +6,7 @@ import ChatHeader from './chat-header.js';
 function ChatMessage(props) {
     return (
         <p>
-            <strong>{props.sender}</strong> <em>{props.content}</em>
+            <strong>{props.sender}:</strong> {props.content}
         </p>
     );
 }
@@ -14,7 +14,7 @@ function ChatMessage(props) {
 function ChatInput(props) {
     return (
         <div>
-             <input type="text" id="textbox-chat-message" placeholder="Enter message..." maxLength="100" />
+             <input type="text" id="textbox-chat-message" placeholder="Enter message..." maxLength="50" />
              <button onClick={ props.onSendMessage() }>
                  Send
              </button>
@@ -26,8 +26,7 @@ export default function ChatRoom(props) {
     return (
         <div id="chat-room-dialogue" className="chit-chat__dialogue chat-room">
             <ChatHeader status={ props.status }/>
-            <label>Chat name - { props.chatName }</label>
-            <ChatInput onSendMessage={ props.onSendMessage } />
+            <label>Your chat name - { props.chatName }</label>
             {
                 props.messages.map((message, index) =>
                       <ChatMessage
@@ -37,6 +36,7 @@ export default function ChatRoom(props) {
                       />,
                  )
             }
+            <ChatInput onSendMessage={ props.onSendMessage } />
         </div>
     );
 }

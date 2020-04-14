@@ -30,13 +30,26 @@ class ChitChatApp extends React.Component {
     render() {
         return (
           <div id="chit-chat-app">
-             <JoinChat status={ this.state.status } onJoinChat={ () => this.handleJoinChat } />
-             <ChatRoom
-                 status={ this.state.status }
-                 chatName={ this.state.username }
-                 messages={ this.state.messages }
-                 onSendMessage={ () => this.handleSendMessage }
-              />
+            {
+                this.state.status === STATUS.NOT_CONNECTED ?
+                    <JoinChat
+                        status={ this.state.status }
+                        onJoinChat={ () => this.handleJoinChat }
+                    />
+                : null
+            }
+
+            {
+                this.state.status !== STATUS.NOT_CONNECTED ?
+                    <ChatRoom
+                        status={ this.state.status }
+                        chatName={ this.state.username }
+                        messages={ this.state.messages }
+                        onSendMessage={ () => this.handleSendMessage }
+                    />
+                : null
+            }
+
           </div>
         );
     }
@@ -85,12 +98,19 @@ class ChitChatApp extends React.Component {
                 }
             }
 
-            this.setState(state => ({ messages: state.messages.concat(newMessage) }));
+            let currentMessages = this.state.messages;
+            if (currentMessages.length > 5) {
+              // Drop first item to create room for new item
+              currentMessages = currentMessages.slice(1, currentMessages.length);
+            }
+
+            this.setState({ messages: currentMessages.concat(newMessage) });
         }
     }
 
     handleSendMessage() {
-        let messageContent = document.getElementById("textbox-chat-message").value;
+        let messageTextBox = document.getElementById("textbox-chat-message");
+        let messageContent = messageTextBox.value;
         if (messageContent === '') {
             alert('Message is empty');
             return;
@@ -102,6 +122,7 @@ class ChitChatApp extends React.Component {
         };
 
         this.state.stompClient.send('/topic/chit-chat', {}, JSON.stringify(message));
+        messageTextBox.value = '';
     }
 
  }
