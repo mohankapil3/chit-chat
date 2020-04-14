@@ -9,7 +9,7 @@ export default function JoinChat(props) {
             <ChatHeader status={ props.status } />
             <label>Enter name</label>
             <input type="text" id="chat-name" maxLength="10" />
-            <button onClick={ props.onClick() }>
+            <button onClick={ props.onJoinChat() }>
               Join room
             </button>
         </div>

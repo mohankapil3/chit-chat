@@ -19,17 +19,18 @@ class ChitChatApp extends React.Component {
           stompClient: null,
           messages: []
       };
-      this.handleJoinChatSubmit = this.handleJoinChatSubmit.bind(this);
-      this.stompClientOnConnected = this.stompClientOnConnected.bind(this);
-      this.stompClientOnError = this.stompClientOnError.bind(this);
-      this.stompClientOnMessageReceived = this.stompClientOnMessageReceived.bind(this);
+
+      this.handleJoinChat = this.handleJoinChat.bind(this);
+      this.onStompClientConnected = this.onStompClientConnected.bind(this);
+      this.onStompClientError = this.onStompClientError.bind(this);
+      this.onStompClientMessageReceived = this.onStompClientMessageReceived.bind(this);
       this.handleSendMessage = this.handleSendMessage.bind(this);
     }
 
     render() {
         return (
           <div id="chit-chat-app">
-             <JoinChat status={ this.state.status } onClick={ () => this.handleJoinChatSubmit } />
+             <JoinChat status={ this.state.status } onJoinChat={ () => this.handleJoinChat } />
              <ChatRoom
                  status={ this.state.status }
                  chatName={ this.state.username }
@@ -40,7 +41,7 @@ class ChitChatApp extends React.Component {
         );
     }
 
-    handleJoinChatSubmit() {
+    handleJoinChat() {
         let username = document.getElementById("chat-name").value;
         if (username === '') {
             alert('Name is empty');
@@ -53,22 +54,23 @@ class ChitChatApp extends React.Component {
         stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
         stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
         this.setState({ stompClient: stompClient });
-        stompClient.connect({}, this.stompClientOnConnected, this.stompClientOnError);
+
+        stompClient.connect({}, this.onStompClientConnected, this.onStompClientError);
     }
 
-    stompClientOnConnected() {
+    onStompClientConnected() {
         console.log('Stomp client connected');
-        this.state.stompClient.subscribe('/topic/chit-chat', this.stompClientOnMessageReceived);
+        this.state.stompClient.subscribe('/topic/chit-chat', this.onStompClientMessageReceived);
         this.setState({ status: STATUS.CONNECTED });
     }
 
-    stompClientOnError(error) {
+    onStompClientError(error) {
         console.log('Stomp client connection error');
         console.log(error);
         // TODO retry?
     }
 
-    stompClientOnMessageReceived(payload) {
+    onStompClientMessageReceived(payload) {
         console.log('Message received from server');
         let message = JSON.parse(payload.body);
         console.log('Message - ' + message);
