@@ -1,0 +1,9 @@
+.chit-chat__dialogue {
+    display: block;
+    border: 1px #ddd solid;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-left: 20px;
+    margin-right: auto;
+    transform: translate(0, 10%)
+}

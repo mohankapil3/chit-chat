@@ -1,0 +1,9 @@
+.chat-room {
+    height: 375px;
+    width: 300px;
+}
+
+.chat-room > * {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
