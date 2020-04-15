@@ -38,6 +38,7 @@ export default function ChatRoom(props) {
         <div id="chat-room-dialogue" className="chit-chat__dialogue chat-room">
             <ChatHeader status={ props.status }/>
             <label>Your chat name - { props.chatName }</label>
+            <ChatInput onSendMessage={ props.onSendMessage } onDoLogout={ props.onDoLogout } />
             {
                 props.messages.map((message, index) =>
                       <ChatMessage
@@ -47,7 +48,6 @@ export default function ChatRoom(props) {
                       />,
                  )
             }
-            <ChatInput onSendMessage={ props.onSendMessage } onDoLogout={ props.onDoLogout } />
         </div>
     );
 }

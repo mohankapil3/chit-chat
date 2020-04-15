@@ -110,10 +110,10 @@ class ChitChatApp extends React.Component {
             let currentMessages = this.state.messages;
             if (currentMessages.length > 5) {
               // Drop first item to create room for new item
-              currentMessages = currentMessages.slice(1, currentMessages.length);
+              currentMessages = currentMessages.slice(0, currentMessages.length - 1);
             }
 
-            this.setState({ messages: currentMessages.concat(newMessage) });
+            this.setState({ messages: [newMessage, ...currentMessages] });
         }
     }
 
