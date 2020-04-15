@@ -74,7 +74,8 @@ class ChitChatApp extends React.Component {
 
     onStompClientConnected() {
         console.log('Client connected');
-        this.state.stompClient.subscribe('/topic/chit-chat', this.onStompClientMessageReceived);
+        this.state.stompClient.subscribe('/topic/chit-chat'
+                      , this.onStompClientMessageReceived, { 'chat-name': this.state.username });
         this.setState({ status: STATUS.CONNECTED });
     }
 
