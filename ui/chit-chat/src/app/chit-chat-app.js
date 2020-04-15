@@ -20,6 +20,7 @@ class ChitChatApp extends React.Component {
       this.onStompClientError = this.onStompClientError.bind(this);
       this.onStompClientMessageReceived = this.onStompClientMessageReceived.bind(this);
       this.handleSendMessage = this.handleSendMessage.bind(this);
+      this.handleLogout = this.handleLogout.bind(this);
     }
 
     render() {
@@ -41,10 +42,10 @@ class ChitChatApp extends React.Component {
                         chatName={ this.state.username }
                         messages={ this.state.messages }
                         onSendMessage={ () => this.handleSendMessage }
+                        onDoLogout={ () => this.handleLogout }
                     />
                 : null
             }
-
           </div>
         );
     }
@@ -87,7 +88,7 @@ class ChitChatApp extends React.Component {
         console.log('Client connection error');
         console.log(error);
         alert('Unable to reach server, please join again');
-        this.setState(this.getInitialState());
+        this.handleLogout();
     }
 
     onStompClientMessageReceived(payload) {
@@ -136,6 +137,14 @@ class ChitChatApp extends React.Component {
 
         this.state.stompClient.send('/topic/chit-chat', {}, JSON.stringify(message));
         messageTextBox.value = '';
+    }
+
+    handleLogout() {
+        if (this.state.stompClient) {
+            this.state.stompClient.disconnect({});
+        }
+
+        this.setState(this.getInitialState());
     }
 
  }

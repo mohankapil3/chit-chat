@@ -18,6 +18,9 @@ function ChatInput(props) {
              <button onClick={ props.onSendMessage() }>
                  Send
              </button>
+             <button onClick={ props.onDoLogout() }>
+                 Logout
+             </button>
         </div>
     );
 }
@@ -36,7 +39,7 @@ export default function ChatRoom(props) {
                       />,
                  )
             }
-            <ChatInput onSendMessage={ props.onSendMessage } />
+            <ChatInput onSendMessage={ props.onSendMessage } onDoLogout={ props.onDoLogout } />
         </div>
     );
 }

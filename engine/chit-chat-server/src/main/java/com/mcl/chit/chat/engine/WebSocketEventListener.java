@@ -16,6 +16,9 @@ public class WebSocketEventListener {
 
     private static final Logger LOGGER = Logger.getLogger(WebSocketEventListener.class.getName());
 
+    private static final String NATIVE_HEADER_CHAT_NAME = "chat-name";
+    private static final String SYSTEM_USER_NAME = "System";
+
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
@@ -27,20 +30,32 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketSubscribeListener(SessionSubscribeEvent event) {
         LOGGER.fine("Inside handleWebSocketSubscribeListener - " + event);
-
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        String headerName = "chat-name";
-        String chatNameHeader = headerAccessor.getFirstNativeHeader(headerName);
-        LOGGER.info(String.format("Received new subscription event, value for %s header is %s", headerName, chatNameHeader));
-        if (chatNameHeader != null && !chatNameHeader.isBlank()) {
-            messagingTemplate.convertAndSend(WebSocketConfig.BROADCAST_TOPIC,
-                    new ChatMessage("System", String.format("User '%s' joined", chatNameHeader)));
-        }
+        setChatNameIntoSessionAndNotifyUsers(StompHeaderAccessor.wrap(event.getMessage()));
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         LOGGER.fine("Inside handleWebSocketDisconnectListener - " + event);
+        notifyDisconnectionToOtherUsers(StompHeaderAccessor.wrap(event.getMessage()));
+    }
+
+    private void setChatNameIntoSessionAndNotifyUsers(StompHeaderAccessor headerAccessor) {
+        String chatName = headerAccessor.getFirstNativeHeader(NATIVE_HEADER_CHAT_NAME);
+        LOGGER.info(String.format("Received subscribe message, value for %s header is %s", NATIVE_HEADER_CHAT_NAME, chatName));
+        if (chatName != null && !chatName.isBlank()) {
+            headerAccessor.getSessionAttributes().put(NATIVE_HEADER_CHAT_NAME, chatName);
+            messagingTemplate.convertAndSend(WebSocketConfig.BROADCAST_TOPIC,
+                    new ChatMessage(SYSTEM_USER_NAME, String.format("%s joined chat", chatName)));
+        }
+    }
+
+    private void notifyDisconnectionToOtherUsers(StompHeaderAccessor headerAccessor) {
+        String chatName = (String) headerAccessor.getSessionAttributes().get(NATIVE_HEADER_CHAT_NAME);
+        LOGGER.info(String.format("Received disconnect message from %s", chatName));
+        if (chatName != null && !chatName.isBlank()) {
+            messagingTemplate.convertAndSend(WebSocketConfig.BROADCAST_TOPIC,
+                    new ChatMessage(SYSTEM_USER_NAME, String.format("%s left chat", chatName)));
+        }
     }
 
 }
