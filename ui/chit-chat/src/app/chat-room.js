@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './common.css';
 import './chat-room.css';
 import ChatHeader from './chat-header.js';
@@ -12,10 +12,18 @@ function ChatMessage(props) {
 }
 
 function ChatInput(props) {
+    useEffect(() => {
+        document.getElementById('textbox-chat-message').onkeypress = function(e) {
+            if(e.keyCode === 13) { // 'Enter' key
+                document.getElementById('button-send-message').click();
+            }
+        }
+    }, []);
+
     return (
         <div>
              <input type="text" id="textbox-chat-message" placeholder="Enter message..." maxLength="50" />
-             <button onClick={ props.onSendMessage() }>
+             <button id="button-send-message" onClick={ props.onSendMessage() }>
                  Send
              </button>
              <button onClick={ props.onDoLogout() }>
