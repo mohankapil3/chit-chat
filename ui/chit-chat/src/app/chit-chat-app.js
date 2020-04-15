@@ -5,7 +5,7 @@ import Stomp from 'stompjs';
 
 const STATUS = {
     NOT_CONNECTED: 'Not connected',
-    CONNECTING: 'Connecting',
+    CONNECTING: 'Connecting...',
     CONNECTED: 'Connected',
 };
 
@@ -66,19 +66,20 @@ class ChitChatApp extends React.Component {
         let stompClient = Stomp.client('ws://localhost:8080/chit-chat/websocket');
         stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
         stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
+        stompClient.debug = () => {}; // suppressing console debug messages
         this.setState({ stompClient: stompClient });
 
         stompClient.connect({}, this.onStompClientConnected, this.onStompClientError);
     }
 
     onStompClientConnected() {
-        console.log('Stomp client connected');
+        console.log('Client connected');
         this.state.stompClient.subscribe('/topic/chit-chat', this.onStompClientMessageReceived);
         this.setState({ status: STATUS.CONNECTED });
     }
 
     onStompClientError(error) {
-        console.log('Stomp client connection error');
+        console.log('Client connection error');
         console.log(error);
     }
 
@@ -109,6 +110,11 @@ class ChitChatApp extends React.Component {
     }
 
     handleSendMessage() {
+
+        if (this.state.status !== STATUS.CONNECTED) {
+            return;
+        }
+
         let messageTextBox = document.getElementById("textbox-chat-message");
         let messageContent = messageTextBox.value;
         if (messageContent === '') {
