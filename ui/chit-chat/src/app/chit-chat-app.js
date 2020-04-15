@@ -13,12 +13,7 @@ class ChitChatApp extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-          status: STATUS.NOT_CONNECTED,
-          username: '',
-          stompClient: null,
-          messages: []
-      };
+      this.state = this.getInitialState();
 
       this.handleJoinChat = this.handleJoinChat.bind(this);
       this.onStompClientConnected = this.onStompClientConnected.bind(this);
@@ -54,6 +49,15 @@ class ChitChatApp extends React.Component {
         );
     }
 
+    getInitialState() {
+        return {
+            status: STATUS.NOT_CONNECTED,
+            username: '',
+            stompClient: null,
+            messages: []
+        };
+    }
+
     handleJoinChat() {
         let username = document.getElementById("textbox-chat-name").value;
         if (username === '') {
@@ -82,6 +86,8 @@ class ChitChatApp extends React.Component {
     onStompClientError(error) {
         console.log('Client connection error');
         console.log(error);
+        alert('Unable to reach server, please join again');
+        this.setState(this.getInitialState());
     }
 
     onStompClientMessageReceived(payload) {
