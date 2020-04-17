@@ -22,11 +22,11 @@ function ChatInput(props) {
 
     return (
         <div>
-             <input type="text" id="textbox-chat-message" placeholder="Enter message..." maxLength="50" />
-             <button id="button-send-message" onClick={ props.onSendMessage() }>
+             <input type="text" id="textbox-chat-message" className="chat-room__input-elements" placeholder="Enter message..." maxLength="50" />
+             <button id="button-send-message" className="chat-room__input-elements" onClick={ props.onSendMessage() }>
                  Send
              </button>
-             <button onClick={ props.onDoLogout() }>
+             <button className="chat-room__input-elements" onClick={ props.onDoLogout() }>
                  Logout
              </button>
         </div>

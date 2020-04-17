@@ -8,6 +8,11 @@
     margin-bottom: 10px;
 }
 
+.chat-room__input-elements {
+    margin-top: 6px;
+    margin-right: 6px;
+}
+
 p {
     word-break: break-all;
     white-space: normal;
