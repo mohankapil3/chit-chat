@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Dialogue from './app/join-chat.js';
+import ChitChatApp from './app/chit-chat-app.js';
 
 ReactDOM.render(
-  <Dialogue />,
+  <ChitChatApp />,
   document.getElementById('root')
 );
 

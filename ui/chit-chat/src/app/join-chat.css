@@ -1,27 +1,13 @@
-.app-header {
-    font-style: italic;
-}
-
-.dialogue {
-    display: block;
-    border-radius: 4px;
-    border: 1px #ddd solid;
-    background-color: #fff;
+.join-chat {
     height: 275px;
     width: 200px;
-    margin-left: 20px;
-    margin-right: auto;
-    transform: translate(0, 10%)
 }
 
-.dialogue > * {
+.join-chat > * {
     margin-left: 15px;
     margin-bottom: 10px;
 }
 
-.dialogue-form > * {
-    display: block;
-    margin-bottom: 10px;
+.join-chat__input-text {
+    margin-top: 6px;
 }
-
-

@@ -1,25 +1,18 @@
 import React from 'react';
+import './common.css';
 import './join-chat.css';
+import ChatHeader from './chat-header.js';
 
-class Dialogue extends React.Component {
-  render() {
-      return (
-        <div id="join-chat-dialogue" className="dialogue">
-          <h2 className="app-header">
-            ChitChat
-          </h2>
-          <form className="dialogue-form">
-            <label>
-              Enter name
-            </label>
-            <input type="text" id="name"/>
-            <button onClick={() => alert(document.getElementById('name').value)}>
+export default function JoinChat(props) {
+    return (
+        <div id="join-chat-dialogue" className="chit-chat__dialogue join-chat">
+            <ChatHeader status={ props.status } />
+            <label>Enter name</label>
+            <input type="text" id="textbox-chat-name" className="join-chat__input-text" maxLength="10" />
+            <button onClick={ props.onJoinChat() }>
               Join room
             </button>
-          </form>
         </div>
-      );
-  }
-}
+    );
 
-export default Dialogue;
+}
