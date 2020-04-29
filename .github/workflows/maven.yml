@@ -23,7 +23,7 @@ jobs:
 
     - name: Install NPM
       working-directory: ui
-      run: npm install
+      run: npm --prefix chit-chat install
 
     - name: Build UI components with NPM
       working-directory: ui
