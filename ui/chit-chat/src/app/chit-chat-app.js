@@ -68,7 +68,7 @@ class ChitChatApp extends React.Component {
 
         this.setState({ username: username, status: STATUS.CONNECTING });
 
-        let stompClient = Stomp.client('ws://localhost:8080/chit-chat/websocket');
+        let stompClient = Stomp.client('ws://' + window.location.host + '/chit-chat/websocket');
         stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
         stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
         stompClient.debug = () => {}; // suppressing console debug messages
