@@ -36,4 +36,4 @@ jobs:
 
     - name: Build server components with Maven
       working-directory: engine
-      run: mvn -B package --file chit-chat-server/pom.xml
+      run: mvn --batch-mode test --file chit-chat-server/pom.xml
