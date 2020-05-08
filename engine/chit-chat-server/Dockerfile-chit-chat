@@ -1,0 +1,9 @@
+FROM adoptopenjdk/openjdk11:alpine-jre
+
+RUN mkdir -p /user/share/[artifactId]/bin
+
+ADD /target/[artifactId]*SNAPSHOT.jar /user/share/[artifactId]/bin/[artifactId].jar
+
+WORKDIR /user/share/[artifactId]
+
+ENTRYPOINT ["/opt/java/openjdk/bin/java", "-jar", "bin/[artifactId].jar"]
