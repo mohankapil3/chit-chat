@@ -16,8 +16,8 @@ resource "aws_elastic_beanstalk_application" "chit-chat" {
   description = "Multiuser chat application"
 }
 
-resource "aws_elastic_beanstalk_environment" "chit-chat-environment" {
-  name = "chit-chat-environment"
+resource "aws_elastic_beanstalk_environment" "chit-chat" {
+  name = "chit-chat"
   application = aws_elastic_beanstalk_application.chit-chat.name
   solution_stack_name = "64bit Amazon Linux 2 v3.0.1 running Docker"
   wait_for_ready_timeout = "60m"

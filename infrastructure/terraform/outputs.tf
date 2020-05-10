@@ -3,5 +3,5 @@ output "chit-chat-ecr-repo_url" {
 }
 
 output "chit-chat-platform-endpoint_url" {
-  value = aws_elastic_beanstalk_environment.chit-chat-environment.endpoint_url
+  value = aws_elastic_beanstalk_environment.chit-chat.endpoint_url
 }
