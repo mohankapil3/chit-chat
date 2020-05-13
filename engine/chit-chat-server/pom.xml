@@ -75,8 +75,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
+                    <repository>chit-chat-ecr-repo</repository>
+                    <tag>latest</tag>
                     <dockerfile>server-dockerfile</dockerfile>
                 </configuration>
             </plugin>
