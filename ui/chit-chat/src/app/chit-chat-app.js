@@ -68,7 +68,7 @@ class ChitChatApp extends React.Component {
 
         this.setState({ username: username, status: STATUS.CONNECTING });
 
-        let stompClient = Stomp.client('ws://' + window.location.host + '/chit-chat/websocket');
+        let stompClient = Stomp.client(this.buildUrl());
         stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
         stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
         stompClient.debug = () => {}; // suppressing console debug messages
@@ -145,6 +145,15 @@ class ChitChatApp extends React.Component {
         }
 
         this.setState(this.getInitialState());
+    }
+
+    buildUrl() {
+        var protocol = 'ws';
+        if (window.location.protocol.toLowerCase() === 'https:') {
+            protocol = 'wss';
+        }
+
+        return protocol + '://' + window.location.host + '/chit-chat/websocket';
     }
 
  }
