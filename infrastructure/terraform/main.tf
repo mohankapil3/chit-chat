@@ -55,7 +55,7 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
   setting {
     namespace = "aws:elbv2:listener:80"
     name = "ListenerEnabled"
-    value = "false"
+    value = "true"
   }
 
   setting {
@@ -96,9 +96,7 @@ data "aws_iam_policy_document" "ec2" {
   statement {
     sid = ""
 
-    actions = [
-      "sts:AssumeRole",
-    ]
+    actions = ["sts:AssumeRole"]
 
     principals {
       type = "Service"
@@ -111,9 +109,7 @@ data "aws_iam_policy_document" "ec2" {
   statement {
     sid = ""
 
-    actions = [
-      "sts:AssumeRole",
-    ]
+    actions = ["sts:AssumeRole"]
 
     principals {
       type = "Service"
