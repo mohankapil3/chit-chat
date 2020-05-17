@@ -21,7 +21,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public static final String APP_ENDPOINT_PREFIX = "/app";
     public static final String BROADCAST_TOPIC = "/topic/chit-chat";
 
-    @Value("${APP_DOMAIN}")
+    @Value("${APP_DOMAIN:}")
     private String appDomain;
 
     @Override
