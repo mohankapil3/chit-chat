@@ -39,7 +39,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes(APP_ENDPOINT_PREFIX);
         registry.enableSimpleBroker(BROADCAST_TOPIC)
-                 // Send heartbeat messages every 30 sec
+                 // Send heartbeat messages every 50 sec
                 .setHeartbeatValue(new long[]{50000, 50000})
                  // Task scheduler needed when heartbeats are configured
                 .setTaskScheduler(new DefaultManagedTaskScheduler());

@@ -70,8 +70,8 @@ class ChitChatApp extends React.Component {
         this.setState({ username: username, status: STATUS.CONNECTING });
 
         let stompClient = Stomp.over(new SockJS('chit-chat'));
-        stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
-        stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
+        stompClient.heartbeat.outgoing = 50000; // send heartbeat to server every 50sec
+        stompClient.heartbeat.incoming = 50000; // expect heartbeat from server every 50sec
         stompClient.debug = () => {}; // suppressing console debug messages
         this.setState({ stompClient: stompClient });
 
