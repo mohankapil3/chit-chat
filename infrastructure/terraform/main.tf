@@ -55,7 +55,7 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
   setting {
     namespace = "aws:elbv2:listener:80"
     name = "ListenerEnabled"
-    value = "true"
+    value = "false"
   }
 
   setting {
