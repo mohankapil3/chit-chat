@@ -75,6 +75,12 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
     name = "SSLCertificateArns"
     value = data.aws_acm_certificate.chit-chat-acm-certificate.arn
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "CHIT_CHAT_ALLOWED_ORIGINS"
+    value = "*"
+  }
 }
 
 data "aws_acm_certificate" "chit-chat-acm-certificate" {
