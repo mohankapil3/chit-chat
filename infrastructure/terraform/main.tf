@@ -55,7 +55,7 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
   setting {
     namespace = "aws:elbv2:listener:80"
     name = "ListenerEnabled"
-    value = "true"
+    value = "false"
   }
 
   setting {
@@ -74,6 +74,12 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
     namespace = "aws:elbv2:listener:443"
     name = "SSLCertificateArns"
     value = data.aws_acm_certificate.chit-chat-acm-certificate.arn
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "CHIT_CHAT_ALLOWED_ORIGINS"
+    value = "*"
   }
 }
 
@@ -123,4 +129,9 @@ data "aws_iam_policy_document" "ec2" {
 resource "aws_iam_role_policy_attachment" "ec2-read-only-ecr-policy-attachment" {
   role = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2-log-management-policy-attachment" {
+  role = aws_iam_role.ec2.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
