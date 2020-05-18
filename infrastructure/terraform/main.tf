@@ -36,9 +36,49 @@ resource "aws_elastic_beanstalk_environment" "chit-chat" {
 
   setting {
     namespace = "aws:autoscaling:asg"
+    name = "Availability Zones"
+    value = "Any 2"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
     name = "MaxSize"
     value = "1"
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name = "LoadBalancerType"
+    value = "application"
+  }
+
+  setting {
+    namespace = "aws:elbv2:listener:80"
+    name = "ListenerEnabled"
+    value = "true"
+  }
+
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name = "ListenerEnabled"
+    value = "true"
+  }
+
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name = "Protocol"
+    value = "HTTPS"
+  }
+
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name = "SSLCertificateArns"
+    value = data.aws_acm_certificate.chit-chat-acm-certificate.arn
+  }
+}
+
+data "aws_acm_certificate" "chit-chat-acm-certificate" {
+  domain   = "chit-chat.com"
 }
 
 resource "aws_iam_instance_profile" "ec2" {
@@ -56,9 +96,7 @@ data "aws_iam_policy_document" "ec2" {
   statement {
     sid = ""
 
-    actions = [
-      "sts:AssumeRole",
-    ]
+    actions = ["sts:AssumeRole"]
 
     principals {
       type = "Service"
@@ -71,9 +109,7 @@ data "aws_iam_policy_document" "ec2" {
   statement {
     sid = ""
 
-    actions = [
-      "sts:AssumeRole",
-    ]
+    actions = ["sts:AssumeRole"]
 
     principals {
       type = "Service"

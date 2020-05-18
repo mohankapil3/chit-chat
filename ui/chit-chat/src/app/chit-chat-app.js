@@ -1,6 +1,7 @@
 import React from 'react';
 import JoinChat from './join-chat.js';
 import ChatRoom from './chat-room.js';
+import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
 const STATUS = {
@@ -68,7 +69,7 @@ class ChitChatApp extends React.Component {
 
         this.setState({ username: username, status: STATUS.CONNECTING });
 
-        let stompClient = Stomp.client(this.buildUrl());
+        let stompClient = Stomp.over(new SockJS('chit-chat'));
         stompClient.heartbeat.outgoing = 20000; // send heartbeat every 20sec to the server
         stompClient.heartbeat.incoming = 0; // not interested in heartbeat from the server
         stompClient.debug = () => {}; // suppressing console debug messages
@@ -146,16 +147,6 @@ class ChitChatApp extends React.Component {
 
         this.setState(this.getInitialState());
     }
-
-    buildUrl() {
-        var protocol = 'ws';
-        if (window.location.protocol.toLowerCase() === 'https:') {
-            protocol = 'wss';
-        }
-
-        return protocol + '://' + window.location.host + '/chit-chat/websocket';
-    }
-
  }
 
 export default ChitChatApp;
