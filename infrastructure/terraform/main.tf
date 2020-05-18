@@ -88,3 +88,8 @@ resource "aws_iam_role_policy_attachment" "ec2-read-only-ecr-policy-attachment" 
   role = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
+
+resource "aws_iam_role_policy_attachment" "ec2-log-management-policy-attachment" {
+  role = aws_iam_role.ec2.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
+}
