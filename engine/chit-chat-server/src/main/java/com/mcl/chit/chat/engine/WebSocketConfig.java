@@ -21,17 +21,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public static final String APP_ENDPOINT_PREFIX = "/app";
     public static final String BROADCAST_TOPIC = "/topic/chit-chat";
 
-    @Value("${APP_DOMAIN:}")
-    private String appDomain;
+    @Value("${CHIT_CHAT_ALLOWED_ORIGINS:}")
+    private String chitChatAllowedOrigins;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         StompWebSocketEndpointRegistration endpointRegistration = registry.addEndpoint(WS_ENDPOINT);
-        LOGGER.info(String.format("APP_DOMAIN env variable resolved to %s", appDomain));
-        if (appDomain != null && !appDomain.isBlank()) {
-            // Add support for application running on SSL
-            endpointRegistration.setAllowedOrigins(appDomain + ":443");
+        LOGGER.info(String.format("CHIT_CHAT_ALLOWED_ORIGINS env variable resolved to %s", chitChatAllowedOrigins));
+        if (chitChatAllowedOrigins != null && !chitChatAllowedOrigins.isBlank()) {
+            endpointRegistration.setAllowedOrigins(chitChatAllowedOrigins.split(","));
         }
+
         endpointRegistration.withSockJS();
     }
 
