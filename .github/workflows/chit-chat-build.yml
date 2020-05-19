@@ -1,4 +1,4 @@
-# This workflow will build ChitChat UI and server components
+# This workflow will build ChitChat client UI and server components
 
 name: ChitChat CI
 
@@ -22,11 +22,11 @@ jobs:
         node-version: 13.12.0
 
     - name: Install NPM
-      working-directory: ui
+      working-directory: client
       run: npm --prefix chit-chat install
 
-    - name: Build UI components with NPM
-      working-directory: ui
+    - name: Build client UI components with NPM
+      working-directory: client
       run: npm --prefix chit-chat run build
 
     - name: Set up JDK 11
@@ -35,5 +35,5 @@ jobs:
         java-version: 11
 
     - name: Build server components with Maven
-      working-directory: engine
-      run: mvn --batch-mode test --file chit-chat-server/pom.xml
+      working-directory: server
+      run: mvn --batch-mode test --file chit-chat/pom.xml
