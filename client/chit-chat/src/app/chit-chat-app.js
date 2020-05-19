@@ -5,9 +5,18 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
 const STATUS = {
-    NOT_CONNECTED: 'Not connected',
-    CONNECTING: 'Connecting...',
-    CONNECTED: 'Connected',
+    NOT_CONNECTED: {
+        text: 'Not connected',
+        style: 'app-header__status-text--not-connected'
+    },
+    CONNECTING: {
+        text: 'Connecting...',
+        style: 'app-header__status-text--connecting'
+    },
+    CONNECTED: {
+        text: 'Connected',
+        style: 'app-header__status-text--connected'
+    }
 };
 
 class ChitChatApp extends React.Component {
@@ -28,7 +37,7 @@ class ChitChatApp extends React.Component {
         return (
           <div id="chit-chat-app">
             {
-                this.state.status === STATUS.NOT_CONNECTED ?
+                this.state.status.text === STATUS.NOT_CONNECTED.text ?
                     <JoinChat
                         status={ this.state.status }
                         onJoinChat={ () => this.handleJoinChat }
@@ -37,7 +46,7 @@ class ChitChatApp extends React.Component {
             }
 
             {
-                this.state.status !== STATUS.NOT_CONNECTED ?
+                this.state.status.text !== STATUS.NOT_CONNECTED.text ?
                     <ChatRoom
                         status={ this.state.status }
                         chatName={ this.state.username }
@@ -120,7 +129,7 @@ class ChitChatApp extends React.Component {
 
     handleSendMessage() {
 
-        if (this.state.status !== STATUS.CONNECTED) {
+        if (this.state.status.text !== STATUS.CONNECTED.text) {
             return;
         }
 

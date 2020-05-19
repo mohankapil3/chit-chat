@@ -7,3 +7,16 @@
     margin-left: 0;
     margin-bottom: 20px;
 }
+
+.app-header__status-text--not-connected {
+    color: red;
+}
+
+.app-header__status-text--connecting {
+    color: blue;
+}
+
+.app-header__status-text--connected {
+    color: green;
+    font-weight: bold;
+}
