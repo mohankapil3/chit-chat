@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Top level script to build/package server and ui components
+Top level script to build/package server and client components
 """
 from os import getcwd
 from subprocess import check_call
@@ -22,19 +22,19 @@ def copy_file_tree(src, dest):
 
 print("Current directory {0}".format(getcwd()))
 
-ui_npm_install_command = "npm --prefix ui/chit-chat install"
+client_npm_install_command = "npm --prefix client/chit-chat install"
 # Safe to invoke shell=True as command is not formed from external inputs
-check_call(ui_npm_install_command, shell=True)
+check_call(client_npm_install_command, shell=True)
 print("NPM install command finished")
 
-ui_npm_build_command = "npm --prefix ui/chit-chat run build"
-check_call(ui_npm_build_command, shell=True)
+client_npm_build_command = "npm --prefix client/chit-chat run build"
+check_call(client_npm_build_command, shell=True)
 print("NPM build command finished")
 
-copy_file_tree("ui/chit-chat/build", "engine/chit-chat-server/src/main/resources/public")
-print("UI artifacts copied to server resources area")
+copy_file_tree("client/chit-chat/build", "server/chit-chat/src/main/resources/public")
+print("Client UI artifacts copied to server resources area")
 
 server_build_command = "mvn clean -B package " \
-                        "--file engine/chit-chat-server/pom.xml -e"
+                        "--file server/chit-chat/pom.xml -e"
 check_call(server_build_command, shell=True)
 print("Maven build finished")
