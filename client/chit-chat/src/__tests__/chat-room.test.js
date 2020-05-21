@@ -10,13 +10,6 @@ beforeEach(() => {
   document.body.appendChild(container);
 });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
 it("renders ChatRoom with some dummy user and messages", () => {
   const message1 = { sender: "user1", content: "Hello from user1"};
   const message2 = { sender: "user2", content: "Hello from user2"};
@@ -45,4 +38,11 @@ it("renders ChatRoom with some dummy user and messages", () => {
 
   const chatMessage2 = componentWrapper.children.item(4);
   expect(chatMessage2.textContent).toEqual("user2: Hello from user2");
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
 });

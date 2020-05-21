@@ -10,13 +10,6 @@ beforeEach(() => {
   document.body.appendChild(container);
 });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
 it("renders with status prop", () => {
   act(() => {
     const status = {
@@ -33,4 +26,11 @@ it("renders with status prop", () => {
 
   const statusLabel = statusWrapper.children.item(1);
   expect(statusLabel.className).toEqual("Some Style");
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
 });
