@@ -1,36 +1,21 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render, cleanup } from '@testing-library/react';
 import ChatHeader from '../app/chat-header.js';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-it("renders with status prop", () => {
-  act(() => {
+it("ChatHeader renders with status prop", () => {
     const status = {
         text: "Some Status",
         style: "Some Style"
     };
-    render(<ChatHeader status={ status } />, container);
-  });
 
-  const componentWrapper = container.children.item(0);
+    const { getByText } = render(<ChatHeader status={ status } />);
 
-  const statusWrapper = componentWrapper.children.item(1);
-  expect(statusWrapper.textContent).toEqual("Status - Some Status");
+    const appHeader = getByText("ChitChat");
+    expect(appHeader).toBeDefined();
 
-  const statusLabel = statusWrapper.children.item(1);
-  expect(statusLabel.className).toEqual("Some Style");
+    const statusLabel = getByText("Some Status");
+    expect(statusLabel).toBeDefined();
+    expect(statusLabel.className).toEqual("Some Style");
 });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+afterEach(cleanup);
