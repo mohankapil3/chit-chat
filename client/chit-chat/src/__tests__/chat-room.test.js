@@ -19,17 +19,10 @@ it("ChatRoom renders with user summary, message text box and past messages", () 
     );
 
     // Assert
-    const userSummary = getByText("Your chat name - user3");
-    expect(userSummary).toBeDefined();
-
-    const messageBox = getByPlaceholderText("Enter message...");
-    expect(messageBox).toBeDefined();
-
-    const message1Container = getByText("Hello from user1");
-    expect(message1Container).toBeDefined();
-
-    const message2Container = getByText("Hello from user2");
-    expect(message2Container).toBeDefined();
+    expect(getByText("Your chat name - user3")).toBeDefined();
+    expect(getByPlaceholderText("Enter message...")).toBeDefined();
+    expect(getByText("Hello from user1")).toBeDefined();
+    expect(getByText("Hello from user2")).toBeDefined();
 });
 
 afterEach(cleanup);
