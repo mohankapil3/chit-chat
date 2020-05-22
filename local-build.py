@@ -27,13 +27,13 @@ client_npm_install_command = "npm --prefix client/chit-chat install"
 check_call(client_npm_install_command, shell=True)
 print("NPM install command finished")
 
-client_npm_build_command = "npm --prefix client/chit-chat run build"
-check_call(client_npm_build_command, shell=True)
-print("NPM build command finished")
-
 client_npm_test_command = "CI=true npm --prefix client/chit-chat test"
 check_call(client_npm_test_command, shell=True)
 print("NPM test command finished")
+
+client_npm_build_command = "npm --prefix client/chit-chat run build"
+check_call(client_npm_build_command, shell=True)
+print("NPM build command finished")
 
 copy_file_tree("client/chit-chat/build", "server/chit-chat/src/main/resources/public")
 print("Client UI artifacts copied to server resources area")
