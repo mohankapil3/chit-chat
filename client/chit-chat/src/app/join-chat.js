@@ -14,5 +14,4 @@ export default function JoinChat(props) {
             </button>
         </div>
     );
-
 }
