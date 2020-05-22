@@ -2,7 +2,7 @@ import React from "react";
 import { render, cleanup } from '@testing-library/react';
 import ChitChatApp from '../app/chit-chat-app.js';
 
-it("ChitChatApp renders successfully", () => {
+it("Top level component ChitChatApp renders successfully", () => {
     // Arrange and Act
     const { container } = render(<ChitChatApp />);
 
