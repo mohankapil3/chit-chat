@@ -1,4 +1,4 @@
-# ChitChat
+# _ChitChat_
 
 Multiuser toy chat application using WebSockets, SpringBoot, ReactJS, AWS
 
