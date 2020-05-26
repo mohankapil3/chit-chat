@@ -4,4 +4,4 @@ Multiuser toy chat application using WebSockets, SpringBoot, ReactJS, AWS
 
 ![ChitChat CI](https://github.com/mohankapil3/chit-chat/workflows/ChitChat%20CI/badge.svg)
 
-See project [wiki](https://github.com/mohankapil3/chit-chat/wiki) for more details
+See [project wiki](https://github.com/mohankapil3/chit-chat/wiki), [project tracker](https://github.com/mohankapil3/chit-chat/projects) for more details
