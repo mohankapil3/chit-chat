@@ -24,6 +24,8 @@ class ChitChatApp extends React.Component {
     constructor(props) {
       super(props);
       this.state = this.getInitialState();
+      this.newMessageAlert = new Audio('/sounds/alert-1.mp3');
+      this.windowInactiveAlert = new Audio('/sounds/alert-2.mp3');
 
       this.handleJoinChat = this.handleJoinChat.bind(this);
       this.onStompClientConnected = this.onStompClientConnected.bind(this);
@@ -65,8 +67,7 @@ class ChitChatApp extends React.Component {
             status: STATUS.NOT_CONNECTED,
             username: '',
             stompClient: null,
-            messages: [],
-            newMessageAudioAlert: new Audio('https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3')
+            messages: []
         };
     }
 
@@ -126,9 +127,11 @@ class ChitChatApp extends React.Component {
 
             this.setState({ messages: [newMessage, ...currentMessages] });
 
-            // Play audio alert if chat window is not active
+            // Play audio alert if chat window is not active or message from some other user
             if (!document.hasFocus()) {
-                this.state.newMessageAudioAlert.play();
+                this.windowInactiveAlert.play();
+            } else if (newMessage.sender !== this.state.username) {
+                this.newMessageAlert.play();
             }
         }
     }
