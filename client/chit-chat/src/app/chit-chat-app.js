@@ -65,7 +65,8 @@ class ChitChatApp extends React.Component {
             status: STATUS.NOT_CONNECTED,
             username: '',
             stompClient: null,
-            messages: []
+            messages: [],
+            newMessageAudioAlert: new Audio('https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3')
         };
     }
 
@@ -124,6 +125,11 @@ class ChitChatApp extends React.Component {
             }
 
             this.setState({ messages: [newMessage, ...currentMessages] });
+
+            // Play audio alert if chat window is not active
+            if (!document.hasFocus()) {
+                this.state.newMessageAudioAlert.play();
+            }
         }
     }
 
