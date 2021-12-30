@@ -52,12 +52,12 @@ public class ChitChatServerIntegrationTest {
 
         stompSession.subscribe(WebSocketConfig.BROADCAST_TOPIC, new ChatMessageStompFrameHandler(serverCallBack));
 
-        var expectedChatMessage = new ChatMessage("user1", "Hello there");
+        var chatMessage = new ChatMessage("user1", "Hello there");
         var appMessageEndpoint = WebSocketConfig.APP_ENDPOINT_PREFIX + ChatController.MESSAGE_BROADCAST_ENDPOINT;
-        stompSession.send(appMessageEndpoint, expectedChatMessage);
+        stompSession.send(appMessageEndpoint, chatMessage);
 
         var receivedMessage = serverCallBack.get(5, SECONDS);
-        assertEquals(expectedChatMessage, receivedMessage);
+        assertEquals(chatMessage, receivedMessage);
     }
 
     private WebSocketStompClient createStompClient() {
